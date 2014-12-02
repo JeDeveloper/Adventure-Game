@@ -12,12 +12,18 @@ public class Player extends LivingBeing {
     }
   }
   public void attack() {
-    
+    int damage = (int)(Math.random() * 10) + 1;
+    monster.changeHealth(damage);  // to be written
   }
   public String toString() {
     return(name + " has " + health + " health remaining"); 
   }
-  //public void drinkPotion(Potion a) {
-  //  super.changeHealth(potion.getStrength());
-  //}
+  
+  public void addBag(Item i) {
+    bag.addItem(i);
+  }
+  
+  public void drinkPotion(Potion beta) {
+    super.changeHealth(beta.getStrength());
+  }
 }
