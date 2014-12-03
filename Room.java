@@ -111,14 +111,25 @@ public class Room extends InfoBase
 	}
 
 	@Override
-	protected String makeTag() {
-		// TODO Auto-generated method stub
-		return null;
+	protected String makeTag() 
+	{
+		String szTag = "ROOM_"+getName().toUpperCase();
+		if (World.getGame().getRoom(szTag) == null || World.getGame().getRoom(szTag).equals(this))
+			return szTag;
+		String szAugTag;
+		int i = 1;
+		while (true)
+		{
+			szAugmentedTag = szTag+i;
+			if (World.getGame().getRoom(szAugTag) == null || World.getGame().getRoom(szAugTag).equals(this))
+				return szAugTag;
+			i++;
+		}
 	}
 
 	@Override
-	public String getFilePath() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getFilePath() 
+	{
+		return "save/rooms.xml";
 	}
 }
