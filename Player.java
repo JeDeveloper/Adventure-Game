@@ -11,19 +11,22 @@ public class Player extends LivingBeing {
       breakall();
     }
   }
-  public void attack() {
-    int damage = (int)(Math.random() * 10) + 1;
-    monster.changeHealth(damage);  // to be written
-  }
-  public String toString() {
-    return(name + " has " + health + " health remaining"); 
-  }
   
+  public int attack(Weapon delta) {
+    System.out.println(name + " attacked GenericTroll with a " + delta.getName());
+    int damage = delta.getPoisonStr() + delta.getDamage();
+    System.out.println("GenericTroll lost " + damage + " health!");
+    return(damage);
+  }
   public void addBag(Item i) {
     bag.addItem(i);
   }
-  
   public void drinkPotion(Potion beta) {
     super.changeHealth(beta.getStrength());
+    System.out.println(super.getHealth)
+  }
+  
+  public String toString() {
+    return(name + " has " + health + " health remaining"); 
   }
 }
