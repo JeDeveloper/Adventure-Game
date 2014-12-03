@@ -19,12 +19,7 @@ public class Room extends InfoBase
 	
 	public Room addRoom(Room r)
 	{
-		Door d1 = new Door();
-		Door d2 = new Door(d1);
-		d1.setPartner(d2);
-		addDoor(d1);
-		r.addDoor(d2);
-		return r;
+		m_Doors.add(new Door(r));
 	}
 	public String getName()
 	{
@@ -95,8 +90,14 @@ public class Room extends InfoBase
 		for (int i = 0; i < getNumDoors(); i++)
 		{
 			n = new JeXMLNode("Door");
-			n.setContent(getDoor(i).getTag());
-			doors.addChildNode(n);
+			xml.setCurrentNode(n);
+			n = new JeXMLNode("Name");
+			n.setContent(getDoor(i).getName());
+			xml.getCurrentNode().addNode(n);
+			n = new JeXMLNode("LeadsTo");
+			n.setContent(getDoor(i).getLeadsTo().getTag());
+			xml.getCurrentNode().addNode(n);
+			xml.setCurrentNode(doors.getParentNode());
 		}
 		xml.getCurrentNode().addChildNode(doors);
 		JeXMLNode beings = new JeXMLNode("LivingBeings");
