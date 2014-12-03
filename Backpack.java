@@ -34,7 +34,7 @@ public class Backpack extends ItemList
     {
       if(holding[c].equals(s))
       {
-        return getStrength();
+        return getStrength(); //No method Backpack::getStrength()
       }
     }
   }

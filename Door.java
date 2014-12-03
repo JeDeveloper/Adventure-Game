@@ -29,7 +29,7 @@ public class Door
 		return m_LeadsTo;
 	}
 	
-	public String getDescription()
+	public String getDirection()
 	{
 		return m_szDirection;
 	}

@@ -1,3 +1,5 @@
+import JeXML.JeXMLNode;
+
 //Done
 public abstract class LivingBeing {
   protected String name;
@@ -6,17 +8,29 @@ public abstract class LivingBeing {
   float moveProb;
   protected int location;
   public Weapon weapon;
+  public static final String TypeName = "LIVING_BEING"; //Inherit this in classes that extend LivingBeing
   
   
-  
-  public LivingBeing(String n, int h) {
+  public LivingBeing(String n, int h) 
+  {
     name = n;
     health = h;
-    moveProb = Math.random();
+    moveProb = (float) Math.random();
+  }
+  
+  public LivingBeing()
+  {
+	  
+  }
+  
+  //XML constructor. If you are not Josh Evans, ignore
+  public LivingBeing(JeXMLNode n)
+  {
+	  
   }
   
   public float checkprob() {
-    moveProb = Math.random();
+    moveProb = (float) Math.random();
     if(moveProb > .5) {
       changeRoom();
     }
@@ -34,6 +48,15 @@ public abstract class LivingBeing {
   //  
   }
   
+  public String getName()
+  {
+	  return name;
+  }
+  
+  public void setName(String szNewName)
+  {
+	  name = szNewName;
+  }
   
   /*
   public int gHealth() {
@@ -48,5 +71,24 @@ public abstract class LivingBeing {
   public void changeHealth(int c) {
     health = health + c;
   }
+
+ 	public JeXMLNode getXML() 
+  	{
+ 		JeXMLNode base = new JeXMLNode("LivingBeing");
+ 		JeXMLNode node = new JeXMLNode("Name");
+ 		node.setContent(getName());
+ 		base.addChildNode(node);
+ 		node = new JeXMLNode("Health");
+ 		node.setContent(""+getHealth());
+ 		base.addChildNode(node);
+ 		node = new JeXMLNode("bRoamsOnOwn");
+ 		node.setContent(RoamsOnOwn+"");
+ 		base.addChildNode(node);
+ 		node = new JeXMLNode("Location");
+ 		node.setContent(World.getGame().getRoom(location).getTag());
+ 		base.addChildNode(node);
+ 		base.addChildNode(weapon.getXML());
+ 		return base;
+	}
 }
 //}

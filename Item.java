@@ -1,13 +1,23 @@
+import JeXML.JeXMLNode;
+
 //Done
 abstract class Item
 {
   protected int weight;
-  protected String type;
+  protected String type; //?
   protected boolean hold;
+  public static final String TypeName = "ITEM";
   
   protected Item()
   {
     hold = false;
+  }
+  
+  protected Item(JeXMLNode node)
+  {
+	  weight = Integer.parseInt(node.getChildNodeContentByName("iWeight"));
+	  type = node.getChildNodeContentByName("Type");
+	  hold = Boolean.parseBoolean(node.getChildNodeContentByName("bHold"));
   }
   
   public String getType()
@@ -38,5 +48,14 @@ abstract class Item
     else
       return Potion();
   }*/
+  
+  public JeXMLNode getXML()
+  {
+	  JeXMLNode base = new JeXMLNode("Item");
+	  base.addChildNode(new JeXMLNode("iWeight", ""+weight));
+	  base.addChildNode(new JeXMLNode("Type", type));
+	  base.addChildNode(new JeXMLNode("bHold", ""+hold));
+	  return base;
+  }
 
 }

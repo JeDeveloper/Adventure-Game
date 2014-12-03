@@ -17,14 +17,10 @@ public class Room extends InfoBase
 		m_Beings = new ArrayList<LivingBeing>();
 	}
 	
-	public int getLevel()
-	{
-		return m_iLevel;
-	}
-	
 	public Room addRoom(Room r)
 	{
 		m_Doors.add(new Door(r));
+		return r;
 	}
 	public String getName()
 	{
@@ -72,9 +68,9 @@ public class Room extends InfoBase
 		xml.setCurrentNode(xml.getCurrentNode().getChildNodeByName("Doors"));
 		for (int i = 0; i < xml.getCurrentNode().getNumChildren(); i++)
 		{
-			xml.setCurrentNode(xml.getCurrentNode().getChildNode(i));
-			Door d = new Door(getCurrentNode().getChildNodeContentByName("Direction"),
-					World.getGame().getRoom(getCurrentNode().getChildNodeContentByName("LeadsTo")));
+			xml.setCurrentNode(xml.getCurrentNode().getChild(i));
+			Door d = new Door(xml.getCurrentNode().getChildNodeContentByName("Direction"),
+					World.getGame().getRoom(xml.getCurrentNode().getChildNodeContentByName("LeadsTo")));
 			m_Doors.add(d);
 			xml.setCurrToParent();
 		}
@@ -82,10 +78,13 @@ public class Room extends InfoBase
 		xml.setCurrentNode(xml.getCurrentNode().getChildNodeByName("LivingBeings"));
 		for (int i = 0; i < xml.getCurrentNode().getNumChildren(); i++)
 		{
-			m_LivingBeings.add(new LivingBeing(xml.getCurrentNode().getChildNode(i)));
+			if (xml.getCurrentNode().getChild(i).getChildNodeContentByName("TypeName").equals("PLAYER"))
+				m_Beings.add(new Player(xml.getCurrentNode().getChild(i)));
+			else
+				m_Beings.add(new Monster(xml.getCurrentNode().getChild(i)));
 		}
 		xml.setCurrToParent();
-		m_iLevel = Integer.parseInt(xml.getChildNodeContentByName("iLevel"));
+		m_iLevel = Integer.parseInt(xml.getCurrentNode().getChildNodeContentByName("iLevel"));
 	}
 
 	@Override
@@ -102,23 +101,26 @@ public class Room extends InfoBase
 			xml.setCurrentNode(n);
 			n = new JeXMLNode("Direction");
 			n.setContent(getDoor(i).getDirection());
-			xml.getCurrentNode().addNode(n);
+			xml.getCurrentNode().addChildNode(n);
 			n = new JeXMLNode("LeadsTo");
 			n.setContent(getDoor(i).getLeadsTo().getTag());
-			xml.getCurrentNode().addNode(n);
+			xml.getCurrentNode().addChildNode(n);
 			xml.setCurrentNode(doors.getParentNode());
 		}
 		xml.getCurrentNode().addChildNode(doors);
 		JeXMLNode beings = new JeXMLNode("LivingBeings");
 		for (int i = 0; i < getNumLivingBeings(); i++)
 		{
-			n = getLivingBeing(i).getXML();
+			if (getLivingBeing(i).getClass().equals(Player.class))
+				n = ((Player)getLivingBeing(i)).getXML();
+			else
+				n = ((Monster)getLivingBeing(i)).getXML();
 			beings.addChildNode(n);
 		}
 		xml.getCurrentNode().addChildNode(beings);
 		n = new JeXMLNode("iLevel");
-		n.setContent(getLevel());
-		xml.getCurrentNode().addNode(n);
+		n.setContent(""+getLevel());
+		xml.getCurrentNode().addChildNode(n);
 	}
 
 	@Override
@@ -131,7 +133,7 @@ public class Room extends InfoBase
 		int i = 1;
 		while (true)
 		{
-			szAugmentedTag = szTag+i;
+			szAugTag = szTag+i;
 			if (World.getGame().getRoom(szAugTag) == null || World.getGame().getRoom(szAugTag).equals(this))
 				return szAugTag;
 			i++;

@@ -1,5 +1,7 @@
 import JeXML.InfoBase;
 import JeXML.JeXMLBase;
+import JeXML.JeXMLInterface;
+
 import java.util.ArrayList;
 
 
@@ -8,9 +10,8 @@ public class World
 	private static World Game;
 	public static World getGame(){return Game;}
 	
-	private Room m_CurrentRoom;
+	private int m_iCurrentRoom;
 	private ArrayList<Room> m_Rooms;
-	private ArrayList<LivingBeing> m_Beings;
 	private Player m_Player;
 	
 	public World()
@@ -18,14 +19,14 @@ public class World
 		
 	}
 	
-	public Room getCurrentRoom()
+	public int getCurrentRoom()
 	{
-		return m_Current;
+		return m_iCurrentRoom;
 	}
 	
-	public void setCurrentRoom(Room newVal)
+	public void setCurrentRoom(int iNewVal)
 	{
-		m_Current = newVal;
+		m_iCurrentRoom = iNewVal;
 	}
 	
 	public int getNumRooms()
@@ -53,43 +54,12 @@ public class World
 		return null;
 	}
 	
-	public int getNumLivingBeings()
-	{
-		return m_LivingBeings.size();
-	}
-	
-	public LivingBeing getLivingBeing(int iIndex)
-	{
-		assert iIndex > -1 : "Index OOB";
-		assert iIndex < getNumLivingBeings() : "Index OOB";
-		return m_LivingBeings.get(iIndex);
-	}
-	
-	public LivingBeing getLivingBeing(String tag)
-	{
-		for (int i = 0; i < getNumLivingBeings(); i++)
-		{
-			if (getLivingBeing(i).getTag().equals(tag))
-			{
-				return getLivingBeing(i);
-			}
-		}
-		assert false : "No LivingBeing with tag "+tag;
-		return null;
-	}
-	
-	//Uses default constructor
-	public Monster newMonster()
-	{
-		Monster m = new Monster();
-		m_LivingBeings.add(m);
-	}
-	
 	//Uses default constructor
 	public Room newRoom()
 	{
 		Room r = new Room();
 		m_Rooms.add(r);
+		return r;
 	}
 	
 	public Player getPlayer()
@@ -97,18 +67,10 @@ public class World
 		return m_Player;
 	}
 	
-	private void save()
+	private void save() throws InstantiationException, IllegalAccessException
 	{
-		ArrayList<LivingBeing> beings = m_LivingBeings.clone();
-		beings.remove(m_Player);
-		//TODO: Check with JeXML documentation to make sure that this is right.
-		//It's almost certainly not
 		JeXMLInterface intr = new JeXMLInterface();
-		intr.saveInfos(m_Rooms);
-		intr.saveInfos(beings);
-		ArrayList<Player> p = new ArrayList<Player>();
-		p.add(getPlayer);
-		intr.saveInfos(p);
+		intr.saveInfos(m_Rooms.toArray(new Room[0]), new Room());
 	}
 	
 	private void load() throws InstantiationException, IllegalAccessException
@@ -116,14 +78,20 @@ public class World
 		JeXMLInterface intr = new JeXMLInterface();
 		//Load basics
 		ArrayList<Room> m_Rooms = intr.loadInfos(new Room());
-		ArrayList<LivingBeing> m_LivingBeings = intr.loadInfos(new Monster());
-		m_Player = intr.loadInfos(new Player()).get(0);
 		//Load details
 		intr.loadInfosDetails(m_Rooms, new Room());
-		intr.loadInfosDetails(m_LivingBeings, new Monster());
-		intr.loadInfosDetails(new Player[]{m_Player}, new Player());
-		m_LivingBeings.add(m_Player);
 		
-		//Transfer loaded data into data structures... could be difficult...
+		//Find the player
+		for (int i = 0; i < getNumRooms(); i++)
+		{
+			for (int j = 0; j < getRoom(i).getNumLivingBeings(); j++)
+			{
+				if (getRoom(i).getLivingBeing(j).getClass().equals(Player.class))
+				{
+					m_Player = (Player) getRoom(i).getLivingBeing(j);
+					m_iCurrentRoom = i;
+				}
+			}
+		}
 	}
 }
