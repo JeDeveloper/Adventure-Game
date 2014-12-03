@@ -27,15 +27,14 @@ public class Backpack extends ItemList
     i.hold = true;
   }
   
-  public Item removeItem(String s)        //trying to change holding to not holding and use the item
+  public int removeItem(String s)        //trying to change holding to not holding and use the item
   {
+    int x = 0;
     for(int c = 0; c<holding.length;c++)
     {
-      if(holding[c].equals(s)
+      if(holding[c].equals(s))
       {
-        holding[c].drop;
-        holding[c].use;
-        return holding[c];
+        return getStrength();
       }
     }
   }
