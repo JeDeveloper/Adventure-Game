@@ -10,3 +10,16 @@ All code committed to GitHub.  Access given to Temour.
 Update 1:
 Player.java updated to communicate with Potion.java and Monster.java
 Monster.java updated to return int values for attack functions.
+
+Update 2:
+Player.java now interfaces with Potion.java and Weapon.java - Monster communication removed.
+Monster.java complete
+Item.java complete
+Weapon.java complete
+Potion.java complete
+LivingBeing.java complete
+
+If I've marked them as //done, then functionally, they're done.  Add JeXML when ready, and all it needs is some name tweaks to match Batra's requirements.  We might need mergers later on to fit his class requirements as well.  It seems that JEvans' sections are the only unfinished ones, as JShap and TRaza just need to fix Backpack.java.
+Class on Wednesday will consist of merging JShap and TRaza's stuff, while JEvans will complete the world implementations and XML saves.
+
+GOALS:  COMPLETE BASIC GAME MECHANICS BY THE END OF THE WEEK.
