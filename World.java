@@ -78,6 +78,20 @@ public class World
 		return null;
 	}
 	
+	//Uses default constructor
+	public Monster newMonster()
+	{
+		Monster m = new Monster();
+		m_LivingBeings.add(m);
+	}
+	
+	//Uses default constructor
+	public Room newRoom()
+	{
+		Room r = new Room();
+		m_Rooms.add(r);
+	}
+	
 	public Player getPlayer()
 	{
 		return m_Player;
@@ -87,6 +101,14 @@ public class World
 	{
 		ArrayList<LivingBeing> beings = m_LivingBeings.clone();
 		beings.remove(m_Player);
+		//TODO: Check with JeXML documentation to make sure that this is right.
+		//It's almost certainly not
+		JeXMLInterface intr = new JeXMLInterface();
+		intr.saveInfos(m_Rooms);
+		intr.saveInfos(beings);
+		ArrayList<Player> p = new ArrayList<Player>();
+		p.add(getPlayer);
+		intr.saveInfos(p);
 	}
 	
 	private void load() throws InstantiationException, IllegalAccessException
@@ -94,14 +116,10 @@ public class World
 		JeXMLInterface intr = new JeXMLInterface();
 		//Load basics
 		ArrayList<Room> m_Rooms = intr.loadInfos(new Room());
-		ArrayList<Usable> usables = intr.loadInfos(new Usable());
-		ArrayList<Weapon> weapons = intr.loadInfos(new Weapon());
 		ArrayList<LivingBeing> m_LivingBeings = intr.loadInfos(new Monster());
 		m_Player = intr.loadInfos(new Player()).get(0);
 		//Load details
 		intr.loadInfosDetails(m_Rooms, new Room());
-		intr.loadInfosDetails(usables, new Usable());
-		intr.loadInfosDetails(weapons, new Weapon());
 		intr.loadInfosDetails(m_LivingBeings, new Monster());
 		intr.loadInfosDetails(new Player[]{m_Player}, new Player());
 		m_LivingBeings.add(m_Player);
