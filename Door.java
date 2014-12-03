@@ -2,9 +2,10 @@ import JeXML.InfoBase;
 import JeXML.JeXMLBase;
 
 
-public class Door extends InfoBase
+public class Door
 {
-	private Door m_Partner;
+	private Room m_LeadsTo;
+	private String m_szDirection;
 	
 	//Blank constructor required by JeXML
 	public Door()
@@ -12,44 +13,13 @@ public class Door extends InfoBase
 		
 	}
 	
-	public Door(Door partner)
+	public Door(Room leadsTo)
 	{
-		m_Partner = partner;
+		m_LeadsTo = leadsTo;
 	}
 	
-	public Door getPartner()
+	public Room getLeadsTo()
 	{
-		return m_Partner;
+		return m_LeadsTo;
 	}
-	
-	public void setPartner(Door d)
-	{
-		m_Partner = d;
-	}
-	
-	@Override
-	public void readDetails(JeXMLBase xml) 
-	{
-		
-	}
-
-	@Override
-	public void writeDetails(JeXMLBase xml) 
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected String makeTag() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getFilePath() 
-	{
-		return "save/doors.xml";
-	}
-
 }
