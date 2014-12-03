@@ -10,4 +10,7 @@ public class Monster extends LivingBeing {
     System.out.println("It mildly annoyed you!")
     return(i)
   }
+  public void changeHealth(int n) {
+    super.changeHealth(n)
+  }
 }
