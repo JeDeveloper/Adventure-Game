@@ -1,3 +1,4 @@
+//Ready for JeXML!
 public class Weapon extends Item
 {
   protected int damage;
