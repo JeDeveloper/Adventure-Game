@@ -1,4 +1,4 @@
-//Ready for JeXML
+//Done
 abstract class Item
 {
   protected int weight;
