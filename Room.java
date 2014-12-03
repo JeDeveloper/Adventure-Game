@@ -17,6 +17,11 @@ public class Room extends InfoBase
 		m_Beings = new ArrayList<LivingBeing>();
 	}
 	
+	public int getLevel()
+	{
+		return m_iLevel;
+	}
+	
 	public Room addRoom(Room r)
 	{
 		m_Doors.add(new Door(r));
@@ -67,16 +72,20 @@ public class Room extends InfoBase
 		xml.setCurrentNode(xml.getCurrentNode().getChildNodeByName("Doors"));
 		for (int i = 0; i < xml.getCurrentNode().getNumChildren(); i++)
 		{
-			//Add to m_Doors the door with the tag contained within
+			xml.setCurrentNode(xml.getCurrentNode().getChildNode(i));
+			Door d = new Door(getCurrentNode().getChildNodeContentByName("Direction"),
+					World.getGame().getRoom(getCurrentNode().getChildNodeContentByName("LeadsTo")));
+			m_Doors.add(d);
+			xml.setCurrToParent();
 		}
 		xml.setCurrToParent();
 		xml.setCurrentNode(xml.getCurrentNode().getChildNodeByName("LivingBeings"));
 		for (int i = 0; i < xml.getCurrentNode().getNumChildren(); i++)
 		{
-			//Add to m_LivingBeings the LivingBeing with the tag contained within.
-			//Bear in mind that all LivingBeings are Player or Monsters! 
+			m_LivingBeings.add(new LivingBeing(xml.getCurrentNode().getChildNode(i)));
 		}
 		xml.setCurrToParent();
+		m_iLevel = Integer.parseInt(xml.getChildNodeContentByName("iLevel"));
 	}
 
 	@Override
@@ -91,8 +100,8 @@ public class Room extends InfoBase
 		{
 			n = new JeXMLNode("Door");
 			xml.setCurrentNode(n);
-			n = new JeXMLNode("Name");
-			n.setContent(getDoor(i).getName());
+			n = new JeXMLNode("Direction");
+			n.setContent(getDoor(i).getDirection());
 			xml.getCurrentNode().addNode(n);
 			n = new JeXMLNode("LeadsTo");
 			n.setContent(getDoor(i).getLeadsTo().getTag());
@@ -103,11 +112,13 @@ public class Room extends InfoBase
 		JeXMLNode beings = new JeXMLNode("LivingBeings");
 		for (int i = 0; i < getNumLivingBeings(); i++)
 		{
-			n = new JeXMLNode("LivingBeing");
-			n.setContent(getLivingBeing(i).getTag());
+			n = getLivingBeing(i).getXML();
 			beings.addChildNode(n);
 		}
 		xml.getCurrentNode().addChildNode(beings);
+		n = new JeXMLNode("iLevel");
+		n.setContent(getLevel());
+		xml.getCurrentNode().addNode(n);
 	}
 
 	@Override
