@@ -13,6 +13,12 @@ public class Door
 		
 	}
 	
+	public Door(String direction, Room leadsTo)
+	{
+		m_LeadsTo = leadsTo;
+		m_szDirection = direction;
+	}
+	
 	public Door(Room leadsTo)
 	{
 		m_LeadsTo = leadsTo;
