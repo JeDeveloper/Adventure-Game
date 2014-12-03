@@ -1,3 +1,4 @@
+//Done
 public class Potion extends Item
 {
   private int strength;
