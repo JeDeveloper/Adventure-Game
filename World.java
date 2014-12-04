@@ -1,5 +1,3 @@
-import JeXML.InfoBase;
-import JeXML.JeXMLBase;
 import JeXML.JeXMLInterface;
 
 import java.util.ArrayList;
@@ -9,14 +7,23 @@ public class World
 {
 	private static World Game;
 	public static World getGame(){return Game;}
-	
+	public static void setGame(World g){World.Game = g;}
 	private int m_iCurrentRoom;
 	private ArrayList<Room> m_Rooms;
 	private Player m_Player;
 	
 	public World()
 	{
-		
+		m_Rooms = new ArrayList<Room>();
+	}
+	
+	public World(Player p)
+	{
+		this();
+		m_Player = p;
+		newRoom().addLivingBeing(getPlayer());
+		m_iCurrentRoom = 0;
+		getRoom(getCurrentRoom()).makeDetails();
 	}
 	
 	public int getCurrentRoom()
@@ -52,6 +59,18 @@ public class World
 		}
 		assert false : "No room with tag " + tag;
 		return null;
+	}
+	
+	public int getRoomIndex(Room r)
+	{
+		for (int i = 0; i < getNumRooms(); i++)
+		{
+			if (r.equals(getRoom(i)))
+			{
+				return i;
+			}
+		}
+		return -1;
 	}
 	
 	//Uses default constructor
