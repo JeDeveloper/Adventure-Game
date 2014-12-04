@@ -7,17 +7,19 @@ abstract class Item
   protected String type; //?
   protected boolean hold;
   public static final String TypeName = "ITEM";
+  public String name;
   
   protected Item()
   {
     hold = false;
+    
   }
   
   protected Item(JeXMLNode node)
   {
-	  weight = Integer.parseInt(node.getChildNodeContentByName("iWeight"));
-	  type = node.getChildNodeContentByName("Type");
-	  hold = Boolean.parseBoolean(node.getChildNodeContentByName("bHold"));
+   weight = Integer.parseInt(node.getChildNodeContentByName("iWeight"));
+   type = node.getChildNodeContentByName("Type");
+   hold = Boolean.parseBoolean(node.getChildNodeContentByName("bHold"));
   }
   
   public String getType()
@@ -51,11 +53,14 @@ abstract class Item
   
   public JeXMLNode getXML()
   {
-	  JeXMLNode base = new JeXMLNode("Item");
-	  base.addChildNode(new JeXMLNode("iWeight", ""+weight));
-	  base.addChildNode(new JeXMLNode("Type", type));
-	  base.addChildNode(new JeXMLNode("bHold", ""+hold));
-	  return base;
+   JeXMLNode base = new JeXMLNode("Item");
+   base.addChildNode(new JeXMLNode("iWeight", ""+weight));
+   base.addChildNode(new JeXMLNode("Type", type));
+   base.addChildNode(new JeXMLNode("bHold", ""+hold));
+   return base;
   }
 
+  public String toString(){
+  return name;
+  }
 }
