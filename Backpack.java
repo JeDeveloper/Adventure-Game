@@ -2,7 +2,7 @@ public class Backpack extends ItemList
 {
 
   protected int maxHold;
-  protected Item holding[] = new Item[50];
+ // protected Item holding[] = new Item[50];
   
   public Backpack()
   {
@@ -16,35 +16,46 @@ public class Backpack extends ItemList
     
   }
   
-  public void addItem(Item i)
+  public boolean addItem(Item i)
   {
-    int c = 0;
+    if(size() < maxHold){
+      add(i);
+      return true;
+    }
+    
+    return false;
+    
+   /* int c = 0;
     while(holding[c]!=null)
     {
       c++;
     }
     holding[c]= i;
-    i.hold = true;
+    i.hold = true;*/
   }
   
-  public int removeItem(String s)        //trying to change holding to not holding and use the item
+  public Item removeItem(int s)        //trying to change holding to not holding and use the item
   {
-    int x = 0;
+    
+   
+        return get(s);
+    
+    
+      /*int x = 0;
     for(int c = 0; c<holding.length;c++)
     {
       if(holding[c].equals(s))
       {
         return getStrength(); //No method Backpack::getStrength()
       }
-    }
+    }*/
   }
   
   public void getItems()
   {
-    for(int c = 0; c<holding.length; c++)
+    for(int c = 0; c<size()-1; c++)
     {
-      if(holding[c]!=null)
-      System.out.println(holding[c]);
+      System.out.println(get(c).toString());
     }
   
     
