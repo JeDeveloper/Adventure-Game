@@ -10,18 +10,43 @@ public class Room extends InfoBase
 	private ArrayList<LivingBeing> m_Beings;
 	private String m_szName;
 	private int m_iLevel;
+	private boolean m_bHasDetails;
+	public static final int MAX_EXITS = 6;
 	
 	public Room()
 	{
 		m_Doors = new ArrayList<Door>();
 		m_Beings = new ArrayList<LivingBeing>();
+		m_bHasDetails = false;
+	}
+	
+	public void makeDetails()
+	{
+		if (isHasDetails())
+			return;
+		int iNumExits = (int)(Math.random() * (MAX_EXITS)) + 1;
+		Room newRoom;
+		for (int i = 0; i < iNumExits; i++)
+		{
+			newRoom = World.getGame().newRoom();
+			addRoomWithReturn(newRoom);
+		}
+		m_bHasDetails = true;
 	}
 	
 	public Room addRoom(Room r)
 	{
-		m_Doors.add(new Door(r));
+		addDoor(new Door(r));
 		return r;
 	}
+	
+	public Room addRoomWithReturn(Room r)
+	{
+		addDoor(new Door(r));
+		r.addDoor(new Door(this));
+		return r;
+	}
+	
 	public String getName()
 	{
 		return m_szName;
@@ -55,10 +80,26 @@ public class Room extends InfoBase
 		assert iIndex > -1 : "Index out of bounds.";
 		return m_Beings.get(iIndex);
 	}
+	
+	public void addLivingBeing(LivingBeing being)
+	{
+		m_Beings.add(being);
+	}
+	
+	public boolean isHasMonsters(boolean isPlayerInRoom)
+	{
+		if (isPlayerInRoom){return getNumLivingBeings()-1>0;}
+		else {return getNumLivingBeings() > 0;}
+	}
 
 	public int getLevel()
 	{
 		return m_iLevel;
+	}
+	
+	public boolean isHasDetails()
+	{
+		return m_bHasDetails;
 	}
 	
 	@Override
@@ -85,6 +126,7 @@ public class Room extends InfoBase
 		}
 		xml.setCurrToParent();
 		m_iLevel = Integer.parseInt(xml.getCurrentNode().getChildNodeContentByName("iLevel"));
+		m_bHasDetails = Boolean.parseBoolean(xml.getCurrentNode().getChildNodeContentByName("bHasDetails"));
 	}
 
 	@Override
@@ -118,9 +160,8 @@ public class Room extends InfoBase
 			beings.addChildNode(n);
 		}
 		xml.getCurrentNode().addChildNode(beings);
-		n = new JeXMLNode("iLevel");
-		n.setContent(""+getLevel());
-		xml.getCurrentNode().addChildNode(n);
+		xml.getCurrentNode().addChildNode(new JeXMLNode("iLevel", ""+getLevel()));
+		xml.getCurrentNode().addChildNode(new JeXMLNode("bHasDetails", isHasDetails()+""));
 	}
 
 	@Override
@@ -144,5 +185,20 @@ public class Room extends InfoBase
 	public String getFilePath() 
 	{
 		return "save/rooms.xml";
+	}
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj.getClass().equals(Room.class))
+			return equals((Room)obj);
+		return false;
+	}
+	
+	public boolean equals(Room r)
+	{
+		if (isHasDetails() != r.isHasDetails())
+			return false;
+		if
 	}
 }
