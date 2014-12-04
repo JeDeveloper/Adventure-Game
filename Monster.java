@@ -1,7 +1,7 @@
 import JeXML.JeXMLNode;
 
 public class Monster extends LivingBeing {
-  private String name = "GenericTroll";
+  private String name;
   public static final String TypeName = "MONSTER";
   public Monster(String name, int h) {
     super(name, h);
@@ -20,7 +20,9 @@ public class Monster extends LivingBeing {
 
 public int attack() {
     System.out.println("GenericTroll is foaming at the mouth!");
-    System.out.println("GenericTroll used FLAME CANNON");
+    String[] attacknames = {"FLAME CANNON","TROLL RAGE","LULZBEAM","INTERNET REFERENCE","BAD TWILIGHT JOKE"};
+    int a = (int)(Math.random() * 5)
+    System.out.println("GenericTroll used " + (attacknames[a]));
     int i = (int)(Math.random() * 100);
     System.out.println("It mildly annoyed you!");
     return i;
