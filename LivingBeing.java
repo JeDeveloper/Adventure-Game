@@ -29,11 +29,13 @@ public abstract class LivingBeing {
 	  
   }
   
-  public float checkprob() {
+  public boolean checkprob() {
     moveProb = (float) Math.random();
     if(moveProb > .5) {
       changeRoom();
+      return true;
     }
+    return false;
   }
   
   public void weapon(Weapon w)
@@ -44,8 +46,9 @@ public abstract class LivingBeing {
   {
     return weapon;
   }
-  public void changeRoom() {
-  //  
+  public void changeRoom(Room newLoc) 
+  {
+	  location = 
   }
   
   public String getName()
@@ -91,4 +94,3 @@ public abstract class LivingBeing {
  		return base;
 	}
 }
-//}
