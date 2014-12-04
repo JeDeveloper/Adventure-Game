@@ -33,7 +33,10 @@ public class AdventureGame
     System.out.println("What is your name?");
     String name = in.nextLine();
     Player player = new Player(name, 100);
+    World.setGame(new World(player));
+    m_Current =  World.getGame().getRoom(World.getGame().getCurrentRoom());
     
+    if(isHasMOnsters)
   }
   
 }
