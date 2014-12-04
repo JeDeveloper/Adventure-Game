@@ -18,3 +18,4 @@ public class ItemList extends ArrayList<Item>
   return iWeight;
  }
 }
+
