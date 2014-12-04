@@ -13,7 +13,7 @@ public class AdventureGame
     Scanner in = new Scanner(System.in);
   
     {
-    int pdam = i.attack(); //Player::attack() requires an Weapon arguement
+    int pdam = i.attack();
     int mdam = j.attack();
     j.changeHealth(pdam);
     i.incrementHealth(mdam);
