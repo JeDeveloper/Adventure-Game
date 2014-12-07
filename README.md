@@ -23,3 +23,9 @@ If I've marked them as //done, then functionally, they're done.  Add JeXML when 
 Class on Wednesday will consist of merging JShap and TRaza's stuff, while JEvans will complete the world implementations and XML saves.
 
 GOALS:  COMPLETE BASIC GAME MECHANICS BY THE END OF THE WEEK.
+
+Update 3:
+All classes have been improved.  JeXML appears to work, Room.java, Door.java and World.java are still incomplete.  All Item.java inherited classes are complete.  Backpack is still buggy.
+Wednesday - Friday: progress was incremental.  We definitely improved some stuff like the player and monster, but as a whole. it still is not fully functional.
+
+
