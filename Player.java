@@ -45,10 +45,7 @@ public void incrementHealth(int h) {
   public void addBag(Item i) {
     bag.addItem(i);
   }
-  public void drinkPotion(Potion beta) {
-    super.changeHealth(beta.getStrength());
-    System.out.println(super.getHealth());
-  }
+
   
   @Override
   public JeXMLNode getXML()
