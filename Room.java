@@ -199,6 +199,14 @@ public class Room extends InfoBase
 	{
 		if (isHasDetails() != r.isHasDetails())
 			return false;
-		if
+		if (!getName().equals(r.getName()))
+			return false;
+		if (getLevel() != r.getLevel())
+			return false;
+		if (!m_Doors.equals(r.m_Doors))
+			return false;
+		if (!m_Beings.equals(r.m_Beings))
+			return false;
+		return true;
 	}
 }

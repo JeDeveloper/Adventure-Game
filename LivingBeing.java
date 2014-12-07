@@ -26,16 +26,16 @@ public abstract class LivingBeing {
   //XML constructor. If you are not Josh Evans, ignore
   public LivingBeing(JeXMLNode n)
   {
-	  
+	  name = n.getChildNodeContentByName("Name");
+	  health = Integer.parseInt(n.getChildNodeContentByName("iHealth"));
+	  RoamsOnOwn = Boolean.parseBoolean(n.getChildNodeContentByName("bRoamsOnOwn"));
+	  location = World.getGame().getRoomIndex(n.getChildNodeContentByName("Location"));
   }
   
-  public boolean checkprob() {
-    moveProb = (float) Math.random();
-    if(moveProb > .5) {
-      changeRoom();
-      return true;
-    }
-    return false;
+  //I am rewriting this method because it doesn't compile and makes no sense.
+  public boolean checkprob() 
+  {
+    return moveProb < Math.random();
   }
   
   public void weapon(Weapon w)
@@ -46,10 +46,31 @@ public abstract class LivingBeing {
   {
     return weapon;
   }
-  public void changeRoom(Room newLoc) 
+  
+  public Room getCurrentRoom()
   {
-	  location = 
+	  return World.getGame().getRoom(location);
   }
+  
+  public void changeToRandomRoom()
+  {
+	  int iNumChoices = getCurrentRoom().getNumDoors();
+	  int iDoor = (int) (Math.random() * iNumChoices);
+	  changeRoom(getCurrentRoom().getDoor(iDoor).getLeadsTo());
+  }
+  
+  public void changeRoom(Room newRoom)
+  {
+	  changeRoom(World.getGame().getRoomIndex(newRoom));
+  }
+  
+  public void changeRoom(int iNewRoom) 
+  {
+	  location = iNewRoom;
+	  processChangeRoom();
+  }
+  
+  public abstract void processChangeRoom();
   
   public String getName()
   {
@@ -75,13 +96,13 @@ public abstract class LivingBeing {
     health = health + c;
   }
 
- 	public JeXMLNode getXML() 
+	public JeXMLNode getXML() 
   	{
  		JeXMLNode base = new JeXMLNode("LivingBeing");
  		JeXMLNode node = new JeXMLNode("Name");
  		node.setContent(getName());
  		base.addChildNode(node);
- 		node = new JeXMLNode("Health");
+ 		node = new JeXMLNode("iHealth");
  		node.setContent(""+getHealth());
  		base.addChildNode(node);
  		node = new JeXMLNode("bRoamsOnOwn");

@@ -73,6 +73,19 @@ public class World
 		return -1;
 	}
 	
+	public int getRoomIndex(String tag)
+	{
+		for (int i = 0; i < getNumRooms(); i++)
+		{
+			if (getRoom(i).getTag().equals(tag))
+			{
+				return i;
+			}
+		}
+		assert false : "No room with tag " + tag;
+		return -1;
+	}
+	
 	//Uses default constructor
 	public Room newRoom()
 	{

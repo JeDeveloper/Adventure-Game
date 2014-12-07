@@ -10,7 +10,7 @@ public class Potion extends Item
   {
     type = "potion";
     strength = (int)Math.random()*10+1;
-    name = "potion " + stregth;
+    name = "potion " + strength;
   }
   public Potion(int level)
   {

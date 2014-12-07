@@ -67,4 +67,10 @@ public void incrementHealth(int h) {
   public String toString() {
     return(name + " has " + health + " health remaining"); 
   }
+
+@Override
+public void processChangeRoom() {
+	// TODO Auto-generated method stub
+	
+}
 }

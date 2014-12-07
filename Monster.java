@@ -21,7 +21,7 @@ public class Monster extends LivingBeing {
 public int attack() {
     System.out.println("GenericTroll is foaming at the mouth!");
     String[] attacknames = {"FLAME CANNON","TROLL RAGE","LULZBEAM","INTERNET REFERENCE","BAD TWILIGHT JOKE"};
-    int a = (int)(Math.random() * 5)
+    int a = (int)(Math.random() * 5);
     System.out.println("GenericTroll used " + (attacknames[a]));
     int i = (int)(Math.random() * 100);
     System.out.println("It mildly annoyed you!");
@@ -39,4 +39,10 @@ public int attack() {
 	  base.addChildNode(new JeXMLNode("Name", name));
 	  return base;
   }
+
+@Override
+public void processChangeRoom() 
+{
+	// TODO Auto-generated method stub
+}
 }
