@@ -12,6 +12,7 @@ public class Room extends InfoBase
 	private int m_iLevel;
 	private boolean m_bHasDetails;
 	public static final int MAX_EXITS = 6;
+	public static final int MAX_MONSTERS = 4; //Actually means 3, for reasons that are complecated
 	
 	public Room()
 	{
@@ -30,6 +31,16 @@ public class Room extends InfoBase
 		{
 			newRoom = World.getGame().newRoom();
 			addRoomWithReturn(newRoom);
+		}
+		
+		int iNumMonsters = Math.random * MAX_MONSTERS;
+		Monster m;
+		int iMonsterHealth;
+		for (int i = 0; i < iNumMonsters; i++)
+		{
+			iMonsterHealth = ((World.getGame().getPlayer().getXP() % 100) + 8) * Math.random() * 4;
+			m = new Monster("A Monster!", iMonsterHealth);
+			addLivingBeing(m);
 		}
 		m_bHasDetails = true;
 	}
