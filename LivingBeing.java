@@ -67,6 +67,7 @@ public abstract class LivingBeing {
   public void changeRoom(int iNewRoom) 
   {
 	  location = iNewRoom;
+	  World.getGame().getRoom(iNewRoom).makeDetails();
 	  processChangeRoom();
   }
   
