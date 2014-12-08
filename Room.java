@@ -19,6 +19,14 @@ public class Room extends InfoBase
 		m_Doors = new ArrayList<Door>();
 		m_Beings = new ArrayList<LivingBeing>();
 		m_bHasDetails = false;
+		m_szName = "www.";
+		int iNumChars = (int) (Math.random() * 20);
+		for (int i = 0; i < iNumChars; i++)
+		{
+			char c = (char)((Math.random() * 26)+97);
+			m_szName += c;
+		}
+		m_szName += ".com";
 	}
 	
 	public void makeDetails()
@@ -33,12 +41,12 @@ public class Room extends InfoBase
 			addRoomWithReturn(newRoom);
 		}
 		
-		int iNumMonsters = Math.random * MAX_MONSTERS;
+		int iNumMonsters = (int) (Math.random() * MAX_MONSTERS);
 		Monster m;
 		int iMonsterHealth;
 		for (int i = 0; i < iNumMonsters; i++)
 		{
-			iMonsterHealth = ((World.getGame().getPlayer().getXP() % 100) + 8) * Math.random() * 4;
+			iMonsterHealth = (int) (((World.getGame().getPlayer().getXP() % 100) + 8) * Math.random() * 4);
 			m = new Monster("A Monster!", iMonsterHealth);
 			addLivingBeing(m);
 		}
@@ -61,6 +69,11 @@ public class Room extends InfoBase
 	public String getName()
 	{
 		return m_szName;
+	}
+	
+	public void removeLivingBeing(LivingBeing p)
+	{
+		m_Beings.remove(p);
 	}
 	
 	public int getNumDoors()
@@ -103,6 +116,15 @@ public class Room extends InfoBase
 		else {return getNumLivingBeings() > 0;}
 	}
 
+	public LivingBeing getMonster(String name)
+	{
+		for (int i = 0; i < getNumLivingBeings(); i++)
+		{
+			if (name.equals(getLivingBeing(i).getName()))
+				return getLivingBeing(i);
+		}
+		return null;
+	}
 	public int getLevel()
 	{
 		return m_iLevel;
@@ -210,7 +232,7 @@ public class Room extends InfoBase
 	{
 		if (isHasDetails() != r.isHasDetails())
 			return false;
-		if (!getName().equals(r.getName()))
+		if (getName() != null && !getName().equals(r.getName()))
 			return false;
 		if (getLevel() != r.getLevel())
 			return false;

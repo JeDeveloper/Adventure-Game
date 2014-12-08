@@ -28,23 +28,26 @@ public class Player extends LivingBeing {
 	}
 	node = node.getParentNode();
   }
-public void incrementHealth(int h) {  
+  public void incrementHealth(int h) {  
     super.changeHealth(h);
     if(health < 0) {
-      System.out.println("Game Over.  " + name + " survived " + xp + " points' worth of internet rage");
+    	System.out.print("After enduring "+getXP()+" of internet vitriol, "+getName()+" lost all vestiges of sanity.");
     }
   }
-  
-  public int attack() {
-    Weapon delta;
-    System.out.println(name + " attacked GenericTroll with a " + delta.getName());
-    int damage = delta.getPoisonStr() + delta.getDamage();
-    System.out.println("GenericTroll lost " + damage + " health!");
-    return(damage);
-  }
-  public void addBag(Item i) {
-    bag.addItem(i);
-  }
+
+	public double getXP()
+	{
+		return xp;
+	}
+	
+	public void changeXP(int i)
+	{
+		xp += i;
+	}
+	  
+	  public void addBag(Item i) {
+	    bag.addItem(i);
+	  }
 
   
   @Override

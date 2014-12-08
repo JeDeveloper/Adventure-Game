@@ -7,7 +7,6 @@ public class World
 {
 	private static World Game;
 	public static World getGame(){return Game;}
-	public static void setGame(World g){World.Game = g;}
 	private int m_iCurrentRoom;
 	private ArrayList<Room> m_Rooms;
 	private Player m_Player;
@@ -20,8 +19,9 @@ public class World
 	public World(Player p)
 	{
 		this();
+		Game = this;
 		m_Player = p;
-		newRoom().addLivingBeing(getPlayer());
+		p.changeRoom(newRoom());
 		m_iCurrentRoom = 0;
 		getRoom(getCurrentRoom()).makeDetails();
 	}
@@ -99,13 +99,13 @@ public class World
 		return m_Player;
 	}
 	
-	private void save() throws InstantiationException, IllegalAccessException
+	public void save() throws InstantiationException, IllegalAccessException
 	{
 		JeXMLInterface intr = new JeXMLInterface();
 		intr.saveInfos(m_Rooms.toArray(new Room[0]), new Room());
 	}
 	
-	private void load() throws InstantiationException, IllegalAccessException
+	public void load() throws InstantiationException, IllegalAccessException
 	{
 		JeXMLInterface intr = new JeXMLInterface();
 		//Load basics

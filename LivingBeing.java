@@ -38,7 +38,12 @@ public abstract class LivingBeing {
     return moveProb < Math.random();
   }
   
-  public void weapon(Weapon w)
+  public void attack(LivingBeing target)
+  {
+	  target.changeHealth(getWeapon().getDamage());
+  }
+  
+  public void setWeapon(Weapon w)
   {
     weapon = w;
   }
@@ -66,8 +71,10 @@ public abstract class LivingBeing {
   
   public void changeRoom(int iNewRoom) 
   {
+	  if (location > -1) {World.getGame().getRoom(iNewRoom).removeLivingBeing(this);}
 	  location = iNewRoom;
-	  World.getGame().getRoom(iNewRoom).makeDetails();
+	  getCurrentRoom().makeDetails();
+	  getCurrentRoom().addLivingBeing(this);
 	  processChangeRoom();
   }
   
@@ -83,16 +90,11 @@ public abstract class LivingBeing {
 	  name = szNewName;
   }
   
-  /*
-  public int gHealth() {
-    return health;
-  }
-  */
-
   public int getHealth()
   {
     return health;
   }
+  
   public void changeHealth(int c) {
     health = health + c;
   }
