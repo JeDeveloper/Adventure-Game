@@ -51,16 +51,22 @@ abstract class Item
       return Potion();
   }*/
   
-  public JeXMLNode getXML()
-  {
-   JeXMLNode base = new JeXMLNode("Item");
-   base.addChildNode(new JeXMLNode("iWeight", ""+weight));
-   base.addChildNode(new JeXMLNode("Type", type));
-   base.addChildNode(new JeXMLNode("bHold", ""+hold));
-   return base;
-  }
+	public JeXMLNode getXML()
+	{
+	   JeXMLNode base = new JeXMLNode("Item");
+	   base.addChildNode(new JeXMLNode("iWeight", ""+weight));
+	   base.addChildNode(new JeXMLNode("Type", type));
+	   base.addChildNode(new JeXMLNode("bHold", ""+hold));
+	   return base;
+	}
 
-  public String toString(){
-  return name;
-  }
+	public String toString()
+	{
+		return name;
+	}
+
+	public String getName()
+	{
+		return name;
+	}
 }

@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 
-import JeXML.InfoBase;
-import JeXML.JeXMLBase;
-import JeXML.JeXMLNode;
+import JeXML.*;
 
 public class Room extends InfoBase
 {
@@ -47,7 +45,13 @@ public class Room extends InfoBase
 		for (int i = 0; i < iNumMonsters; i++)
 		{
 			iMonsterHealth = (int) (((World.getGame().getPlayer().getXP() % 100) + 8) * Math.random() * 4);
-			m = new Monster("A Monster!", iMonsterHealth);
+			String monsterName = "";
+			for (int j = 0; j < 6; j++)
+			{
+				char c = (char)((Math.random() * 26)+97);
+				monsterName += c;
+			}
+			m = new Monster(monsterName, iMonsterHealth);
 			addLivingBeing(m);
 		}
 		m_bHasDetails = true;

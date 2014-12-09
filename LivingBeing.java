@@ -29,7 +29,7 @@ public abstract class LivingBeing {
 	  name = n.getChildNodeContentByName("Name");
 	  health = Integer.parseInt(n.getChildNodeContentByName("iHealth"));
 	  RoamsOnOwn = Boolean.parseBoolean(n.getChildNodeContentByName("bRoamsOnOwn"));
-	  location = World.getGame().getRoomIndex(n.getChildNodeContentByName("Location"));
+	  //location = World.getGame().getRoomIndex(n.getChildNodeContentByName("Location"));
   }
   
   //I am rewriting this method because it doesn't compile and makes no sense.
@@ -38,9 +38,11 @@ public abstract class LivingBeing {
     return moveProb < Math.random();
   }
   
-  public void attack(LivingBeing target)
+  public int attack(LivingBeing target)
   {
-	  target.changeHealth(getWeapon().getDamage());
+	  int iDamage = getWeapon().getDamage();
+	  target.changeHealth(-iDamage);
+	  return iDamage;
   }
   
   public void setWeapon(Weapon w)
@@ -111,9 +113,9 @@ public abstract class LivingBeing {
  		node = new JeXMLNode("bRoamsOnOwn");
  		node.setContent(RoamsOnOwn+"");
  		base.addChildNode(node);
- 		node = new JeXMLNode("Location");
+ 		/*node = new JeXMLNode("Location");
  		node.setContent(World.getGame().getRoom(location).getTag());
- 		base.addChildNode(node);
+ 		base.addChildNode(node);*/
  		base.addChildNode(weapon.getXML());
  		return base;
 	}

@@ -57,5 +57,10 @@ public class Weapon extends Item
    //Not sure how to deal with 'types' since I have no idea what it means.
    return base;
   }
+  
+  public String toString()
+  {
+	  return getName()+"_"+getMinDamage()+"-"+getMaxDamage();
+  }
 }
   

@@ -7,6 +7,7 @@ public class Monster extends LivingBeing {
   public Monster(String name, int h) 
   {
     super(name, h);
+    weapon = new Weapon();
     m_iKillXP = (int) (Math.random() * h * 2);
   }
   
@@ -17,7 +18,8 @@ public class Monster extends LivingBeing {
 	  name = node.getChildNodeContentByName("Name");
   }
 
-  public void changeHealth(int n) {
+  public void changeHealth(int n) 
+  {
     super.changeHealth(n);
   }
   
@@ -35,9 +37,9 @@ public class Monster extends LivingBeing {
 	  return base;
   }
 
-@Override
-public void processChangeRoom() 
-{
-	// TODO Auto-generated method stub
-}
+	@Override
+	public void processChangeRoom() 
+	{
+		// TODO Auto-generated method stub
+	}
 }

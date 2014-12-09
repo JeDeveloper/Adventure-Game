@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-//import JeXML.JeXMLInterface;
+import JeXML.JeXMLInterface;
 
 public class AdventureGame 
 {
@@ -10,7 +10,8 @@ public class AdventureGame
 		"help", //prints a list of commands
 		"move",// enter a door
 		"load",//loads the game
-		"save"//saves the game
+		"save",//saves the game
+		"use"//use a potion
 		};
 	public static void main(String[] args) 
 	{
@@ -53,6 +54,11 @@ public class AdventureGame
 			{
 				System.out.println("\tLeads To:"+p.getCurrentRoom().getDoor(i).getLeadsTo().getName());
 			}
+			System.out.println("Number of items in your bag: "+p.bag.size()+".");
+			for (int i = 0; i < p.bag.size(); i++)
+			{
+				System.out.println("\t"+p.getName());
+			}
 			return;
 		case 1:
 			p = World.getGame().getPlayer();
@@ -80,6 +86,7 @@ public class AdventureGame
 			System.out.println(commands[3]+" [the name of a destination] : go through a door");
 			System.out.println(commands[4]+" : loads the previous game.");
 			System.out.println(commands[5]+" : saves the game.");
+			return;
 		case 3:
 			p = World.getGame().getPlayer();
 			String roomname = "";
@@ -129,6 +136,22 @@ public class AdventureGame
 				e.printStackTrace();
 			}
 			return;
+		case 6:
+			p = World.getGame().getPlayer();
+			String potionname = "";
+			try{
+			potionname = input.split(" ",2)[1];
+			}
+			catch (IndexOutOfBoundsException e)
+			{
+				System.out.println("No specified potion to use.");
+				return;
+			}
+			Potion potion = (Potion) p.getItem(potionname);
+			if (potion == null)
+			{
+				System.out.println("No potion with the name "+potionname+".");
+			}
 		}
 	}
 	
